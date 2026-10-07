@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KES/TZS Exchange Rate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero card">
+        <p class="eyebrow">East Africa FX Monitor</p>
+        <h1>KES / TZS Rate</h1>
+
+        <div class="rate-box">
+          <div class="rate-value"><span id="latest-rate">--</span></div>
+          <div class="rate-caption">TZS per 1 KES</div>
+        </div>
+
+        <div class="meta-grid">
+          <div>
+            <label>Updated</label>
+            <p id="updated-at">Loading...</p>
+          </div>
+          <div>
+            <label>Window</label>
+            <p>06:00 to 18:00</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Recent Updates</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Rate</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body">
+              <tr>
+                <td colspan="2">Loading recent records...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
