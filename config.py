@@ -14,9 +14,9 @@ FETCH_INTERVAL_MINUTES = 10
 WINDOW_START_HOUR = 6
 WINDOW_END_HOUR = 18
 
-# This free public service is enough for a cost-free exchange-rate lookup.
-# It returns currency conversion data without requiring an API key.
-FRANKFURTER_URL = "https://api.frankfurter.app/latest"
+# Use a provider that supports KES/TZS conversion.
+# The open.er-api.com endpoint returns the KES base rate and includes TZS in rates.TZS.
+EXCHANGE_RATE_API_URL = "https://open.er-api.com/v6/latest/KES"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
