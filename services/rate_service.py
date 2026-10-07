@@ -6,7 +6,7 @@ from datetime import datetime
 
 import requests
 
-from config import APP_TIMEZONE, FRANKFURTER_URL, WINDOW_END_HOUR, WINDOW_START_HOUR
+from config import APP_TIMEZONE, EXCHANGE_RATE_API_URL, WINDOW_END_HOUR, WINDOW_START_HOUR
 from db import ensure_db, save_rate
 
 logger = logging.getLogger(__name__)
@@ -14,17 +14,18 @@ logger = logging.getLogger(__name__)
 
 def fetch_kes_tzs_rate() -> float:
     """Fetch the latest KES/TZS conversion rate using a free public API."""
-    # The Frankfurter API supports currency conversion without requiring API keys.
-    # We ask for 1 Kenyan Shilling converted into Tanzanian Shillings.
-    params = {"from": "KES", "to": "TZS", "amount": 1}
-    response = requests.get(FRANKFURTER_URL, params=params, timeout=10)
+    response = requests.get(EXCHANGE_RATE_API_URL, timeout=10)
     response.raise_for_status()
 
     payload = response.json()
-    if "rates" not in payload or "TZS" not in payload["rates"]:
-        raise ValueError("Frankfurter response did not contain a TZS rate for KES.")
+    if payload.get("result") != "success":
+        raise ValueError("Open Exchange Rates API did not return success.")
 
-    rate = float(payload["rates"]["TZS"])
+    rates = payload.get("rates", {})
+    if "TZS" not in rates:
+        raise ValueError("KES/TZS rate not available from the API.")
+
+    rate = float(rates["TZS"])
     return rate
 
 
